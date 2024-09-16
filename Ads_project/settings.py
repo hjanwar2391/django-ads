@@ -16,17 +16,17 @@ SECRET_KEY = os.environ.get(
     "SECRET_KEY", "default-secret-key-for-dev"
 )  # Provide a default secret key for dev
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG", "False") == "True"
 
 
 
 
 # CSRF Trusted Origins
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['webadscenter.onrender.com', '127.0.0.1', 'localhost']
+
 CSRF_TRUSTED_ORIGINS = [
-    'http://webadscenter.onrender.com',  # Production
-    'http://localhost:8000'  # Localhost for development
+    'https://webadscenter.onrender.com',
+    'http://webadscenter.onrender.com',
+    'https://127.0.0.1:8000/'
 ]
 
 
@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "ads_app",  # Your custom app
     "crispy_forms",
     "crispy_bootstrap5",
+    "sslserver",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
