@@ -140,7 +140,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'your-secret-key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['your-app-name.onrender.com', '127.0.0.1']
+ALLOWED_HOSTS = ["*"]
 
 # CSRF Trusted Origins
 CSRF_TRUSTED_ORIGINS = ['https://webadscenter.onrender.com', 'http://127.0.0.1:8000']
