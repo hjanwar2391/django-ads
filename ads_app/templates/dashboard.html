@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+
+
+<!-- Profile Section -->
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="card" style="background-color: antiquewhite; padding: 20px;">
+                <div class="card-body text-center">
+                    <h2>Welcome, {{ user.first_name }}!</h2>
+                    <p>Your Unique ID: <strong>{{ user.unique_id }}</strong></p> <!-- Display the unique ID -->
+                    <p>Wallet Points: <strong>{{ wallet_points }}</strong></p>
+                    <p>Email: <strong>{{ user.email }}</strong></p>
+                    <p>Phone: <strong>{{ user.phone }}</strong></p>
+                    <p>Address: <strong>{{ user.address }}, {{ user.city }}, {{ user.zip_code }}, {{ user.country
+                            }}</strong></p>
+
+                    <!-- Logout Button -->
+                    <a href="{% url 'logout' %}" class="btn btn-danger mt-3">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

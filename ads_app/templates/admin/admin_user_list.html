@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid mt-5">
+    <!-- Page Title -->
+    <h1 class="text-center mb-4">User List</h1>
+
+    <!-- Responsive Table with Full Width and 10px Margin -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped" style="width: calc(100% - 20px); margin: 0 10px;">
+            <thead class="table-dark">
+                <tr>
+                    <th>No</th>
+                    <th>User ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.unique_id }}</td>
+                    <td>{{ user.first_name }} {{ user.last_name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        <!-- Display current status in a dropdown -->
+                        <form method="POST" action="">
+                            {% csrf_token %}
+                            <input type="hidden" name="user_id" value="{{ user.id }}">
+
+                            <select name="status" class="form-select">
+                                <option value="pending" {% if user.status == 'pending' %}selected{% endif %}>Pending</option>
+                                <option value="checking" {% if user.status == 'checking' %}selected{% endif %}>Checking</option>
+                                <option value="active" {% if user.status == 'active' %}selected{% endif %}>Active</option>
+                            </select>
+
+                            <!-- Button to submit status change -->
+                            <button type="submit" name="change_status" class="btn btn-primary btn-sm mt-2">Update Status</button>
+                        </form>
+                    </td>
+                    <td>
+                        <!-- Form for deleting user -->
+                        <form method="POST" action="">
+                            {% csrf_token %}
+                            <input type="hidden" name="user_id" value="{{ user.id }}">
+                            <button type="submit" name="delete" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this user?');">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock content %}

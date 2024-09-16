@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid mt-5">
+    <!-- Page Title -->
+    <h1 class="text-center mb-4">Withdrawal Requests</h1>
+
+    <!-- Filter options -->
+    <form method="GET" action="" class="mb-4">
+        <label for="filter">Filter by Status:</label>
+        <select name="status_filter" class="form-select" style="max-width: 300px;" onchange="this.form.submit()">
+            <option value="">All</option>
+            <option value="pending" {% if status_filter == 'pending' %}selected{% endif %}>Pending</option>
+            <option value="processing" {% if status_filter == 'processing' %}selected{% endif %}>Processing</option>
+            <option value="completed" {% if status_filter == 'completed' %}selected{% endif %}>Completed</option>
+            <option value="canceled" {% if status_filter == 'canceled' %}selected{% endif %}>Canceled</option>
+        </select>
+    </form>
+
+    <!-- Responsive Table -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped" style="width: calc(100% - 20px); margin: 0 10px;">
+            <thead class="table-dark">
+                <tr>
+                    <th>User ID</th>
+                    <th>Amount</th>
+                    <th>Method</th>
+                    <th>Phone Number</th>
+                    <th>Status</th>
+                    <th>Issue Date</th>
+                    <th>Change Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for withdrawal in withdrawals %}
+                <tr>
+                    <td>{{ withdrawal.user.unique_id }}</td>
+                    <td>{{ withdrawal.amount }}</td>
+                    <td>{{ withdrawal.get_withdrawal_method_display }}</td>
+                    <td>{{ withdrawal.phone_number }}</td>
+                    <td>{{ withdrawal.get_status_display }}</td>
+                    <td>{{ withdrawal.created_at }}</td>
+                    <td>
+                        <!-- Form to change status -->
+                        <form method="POST" action="">
+                            {% csrf_token %}
+                            <input type="hidden" name="withdrawal_id" value="{{ withdrawal.id }}">
+                            <select name="new_status" class="form-select">
+                                <option value="pending" {% if withdrawal.status == 'pending' %}selected{% endif %}>Pending</option>
+                                <option value="processing" {% if withdrawal.status == 'processing' %}selected{% endif %}>Processing</option>
+                                <option value="completed" {% if withdrawal.status == 'completed' %}selected{% endif %}>Completed</option>
+                                <option value="canceled" {% if withdrawal.status == 'canceled' %}selected{% endif %}>Canceled</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary btn-sm mt-2">Update Status</button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center">No withdrawal requests found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock content %}

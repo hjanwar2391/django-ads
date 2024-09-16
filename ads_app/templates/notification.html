@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+ <div style="margin: 20px;">
+    {% for notification in notifications %}
+    <div class="notification-card shadow-sm"
+        style="border-left: 5px solid #007bff; background-color: #f8f9fa; padding: 20px; margin-bottom: 15px; transition: 0.3s; border-radius: 5px;">
+
+        <p class="notification-message" style="font-size: 16px; font-weight: bold; color: #343a40;">
+            {{notification.message }}</p>
+
+        <span class="notification-timestamp" style="font-size: 12px; color: #6c757d;">{{ notification.created_at}}</span>
+
+        <button class="mark-read-btn"
+            style="float: right; background-color: transparent; color: #007bff; border: none; cursor: pointer;">Mark as
+            Read</button>
+    </div>
+    {% endfor %}
+ </div>
+
+
+
+{% endblock content %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5" style="max-width: 600px;">
+    <!-- Page Title -->
+    <h1 class="text-center mb-4">Send Notification</h1>
+
+    <!-- Send Notification Form -->
+    <form method="POST">
+        {% csrf_token %}
+        
+        <!-- Notification Message Textarea -->
+        <div class="mb-3">
+            <textarea name="message" class="form-control" rows="4" placeholder="Enter your notification message" required></textarea>
+        </div>
+        
+        <!-- Submit Button -->
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary w-100">Send Notification</button>
+        </div>
+    </form>
+</div>
+
+{% endblock content %}

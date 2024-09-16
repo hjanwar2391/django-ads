@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid mt-5">
+    <!-- Page Title -->
+    <h1 class="text-center mb-4">Video List</h1>
+
+    <!-- Responsive Table -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped" style="width: calc(100% - 20px); margin: 0 10px;">
+            <thead class="table-dark">
+                <tr>
+                    <th>Title</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for video in videos %}
+                <tr>
+                    <td>{{ video.title }}</td>
+                    <td>
+                        <!-- Form for deleting video -->
+                        <form method="POST" action="">
+                            {% csrf_token %}
+                            <input type="hidden" name="video_id" value="{{ video.id }}">
+                            <button type="submit" class="btn btn-danger btn-sm" 
+                                onclick="return confirm('Are you sure you want to delete this video?');">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5" style="max-width: 800px; margin: auto;">
+    <!-- Ad Title -->
+    <h1 style="text-align: center; font-size: 24px; margin-bottom: 20px;">Ad: {{ ad.title }}</h1>
+
+    <!-- Responsive Video -->
+    <video controls style="width: 100%; max-width: 100%; height: auto; margin-bottom: 20px;" autoplay>
+        <source src="{{ ad.video.url }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Button to load the next ad manually -->
+    <form method="get" action="{% url 'view_ads' %}" style="text-align: center;">
+        <button type="submit" class="btn btn-primary" style="padding: 10px 20px; font-size: 16px;">Next Ad</button>
+    </form>
+</div>
+
+{% endblock content %}

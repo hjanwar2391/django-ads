@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content%}
+
+<div class="container mt-5" style="max-width: 600px;">
+    <!-- Title -->
+    <h1 class="text-center mb-4">Add a Reference</h1>
+
+    <!-- Show error if user has already referred 3 users -->
+    {% if error %}
+    <div class="alert alert-danger text-center">{{ error }}</div>
+    {% endif %}
+
+    <!-- Show the form if the user hasn't reached the reference limit -->
+    {% if not form_disabled %}
+    <form method="POST" class="mb-4">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary w-100">Add Reference</button>
+    </form>
+    {% else %}
+    <p class="text-danger text-center">You cannot add more than 3 references.</p>
+    {% endif %}
+
+    <!-- Show the user's existing references -->
+    <h2 class="mb-3">Your References ({{ user_references.count }} of 3)</h2>
+    <ul class="list-group mb-4">
+        {% for reference in user_references %}
+        <li class="list-group-item">
+            {{ reference.referred_user.first_name }} {{ reference.referred_user.last_name }} 
+            ({{ reference.referred_user.email }})
+        </li>
+        {% empty %}
+        <li class="list-group-item">You have not referred anyone yet.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock content %}

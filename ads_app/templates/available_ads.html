@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<h1>Available Videos</h1>
+<ul>
+    {% for video in videos %}
+    <li>
+        <a href="{% url 'view_ad' video.id %}">{{ video.title }}</a>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock content %}

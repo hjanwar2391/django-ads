@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5" style="max-width: 800px;">
+    <!-- Withdraw Points Title -->
+    <h1 class="text-center mb-4">Withdraw Points</h1>
+
+    <!-- Current Balance -->
+    <p class="text-center"><strong>Your current balance:</strong> {{ wallet_points }} points</p>
+
+    <!-- Show message if points are less than 440 -->
+    {% if message %}
+    <div class="alert alert-danger text-center">{{ message }}</div>
+    {% endif %}
+
+    <!-- Show the form only if the user has 440 points or more -->
+    {% if form %}
+    <form method="POST" class="mb-4">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary w-100">Submit Withdrawal Request</button>
+    </form>
+    {% endif %}
+
+    <!-- Withdrawal History Section -->
+    <h2 class="mb-3">Your Withdrawal History</h2>
+    
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Amount</th>
+                    <th>Method</th>
+                    <th>Phone Number</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for withdrawal in withdrawal_history %}
+                <tr>
+                    <td>{{ withdrawal.amount }}</td>
+                    <td>{{ withdrawal.get_withdrawal_method_display }}</td>
+                    <td>{{ withdrawal.phone_number }}</td>
+                    <td>{{ withdrawal.get_status_display }}</td>
+                    <td>{{ withdrawal.created_at }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center">No withdrawal requests found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock content %}
