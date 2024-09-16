@@ -144,7 +144,7 @@ DEBUG = os.environ.get("DEBUG", "False") == "True"
 ALLOWED_HOSTS = ["*"]
 
 # CSRF Trusted Origins
-CSRF_TRUSTED_ORIGINS = ["https://webadscenter.onrender.com", "http://127.0.0.1:8000"]
+CSRF_TRUSTED_ORIGINS = ['webadscenter.onrender.com', '127.0.0.1']
 
 # Static files
 STATIC_URL = "/static/"
@@ -225,9 +225,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Security settings for production
-SECURE_SSL_REDIRECT = not DEBUG
-CSRF_COOKIE_SECURE = not DEBUG
-SESSION_COOKIE_SECURE = not DEBUG
+# SECURE_SSL_REDIRECT = not DEBUG
+# CSRF_COOKIE_SECURE = not DEBUG
+# SESSION_COOKIE_SECURE = not DEBUG
 
 # Email settings
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
