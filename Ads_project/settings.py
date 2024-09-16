@@ -5,8 +5,6 @@
 # BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-
-
 # # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = "django-insecure-r$e^id+9zmki5lwq*3x*jcv5jak6&!f#x9&phbq^v@9c47@q7x"
 
@@ -125,38 +123,36 @@
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-
-
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-load_dotenv() 
-import dj_database_url
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
-DATABASES = {
-    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
-}
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY", "default-secret-key-for-dev"
+)  # Provide a default secret key for dev
+
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+DEBUG = os.environ.get("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = ["*"]
 
 # CSRF Trusted Origins
-CSRF_TRUSTED_ORIGINS = ['https://webadscenter.onrender.com', 'http://127.0.0.1']
-
+CSRF_TRUSTED_ORIGINS = ["https://webadscenter.onrender.com", "http://127.0.0.1:8000"]
 
 # Static files
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # Media files
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Application definition
 INSTALLED_APPS = [
@@ -166,7 +162,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "ads_app",
+    "ads_app",  # Your custom app
     "crispy_forms",
     "crispy_bootstrap5",
 ]
@@ -189,7 +185,7 @@ ROOT_URLCONF = "Ads_project.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / 'templates'],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -202,20 +198,15 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Ads_project.wsgi.application'
+WSGI_APPLICATION = "Ads_project.wsgi.application"
 
-# Database configuration
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
+# Database configuration using SQLite (no DATABASE_URL needed)
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
-else:
-    DATABASES = {
-        'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
-    }
+}
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -239,25 +230,24 @@ CSRF_COOKIE_SECURE = not DEBUG
 SESSION_COOKIE_SECURE = not DEBUG
 
 # Email settings
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
-EMAIL_PORT = os.environ.get('EMAIL_PORT', 587)
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = os.environ.get("EMAIL_HOST", "smtp.gmail.com")
+EMAIL_PORT = os.environ.get("EMAIL_PORT", 587)
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 
 # Internationalization
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+LANGUAGE_CODE = "en-us"
+TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
 
 # Default primary key field type
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Custom user model
-AUTH_USER_MODEL = 'ads_app.User'
-
+AUTH_USER_MODEL = "ads_app.User"
