@@ -143,7 +143,8 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = ['your-app-name.onrender.com', '127.0.0.1']
 
 # CSRF Trusted Origins
-CSRF_TRUSTED_ORIGINS = ['https://webadscenter.onrender.com/', 'http://127.0.0.1:8000']
+CSRF_TRUSTED_ORIGINS = ['https://webadscenter.onrender.com', 'http://127.0.0.1:8000']
+
 
 # Static files
 STATIC_URL = '/static/'
