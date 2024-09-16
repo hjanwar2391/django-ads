@@ -25,7 +25,7 @@ urlpatterns = [
     path("admin_user_list/", views.admin_user_list, name="admin_user_list"),
     
     path("upload_video/", views.admin_video_upload, name="admin_video_upload"),
-    path("/videos/", views.admin_video_list, name="admin_video_list"),
+    path("videos/", views.admin_video_list, name="admin_video_list"),
     path(
         "send_notification/",
         views.admin_send_notification,
