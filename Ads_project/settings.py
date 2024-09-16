@@ -141,10 +141,18 @@ SECRET_KEY = os.environ.get(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ["*"]
+
+
 
 # CSRF Trusted Origins
-CSRF_TRUSTED_ORIGINS = ['https://webadscenter.onrender.com', 'http://127.0.0.1']
+ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = [
+    'http://webadscenter.onrender.com',  # Production
+    'http://localhost:8000'  # Localhost for development
+]
+
+
+
 
 
 # Static files
@@ -225,10 +233,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Security settings for production
-# SECURE_SSL_REDIRECT = not DEBUG
-# CSRF_COOKIE_SECURE = not DEBUG
-# SESSION_COOKIE_SECURE = not DEBUG
 
 # Email settings
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
@@ -247,8 +251,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = "static/"
 
-# Default primary key field type
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
 
 # Custom user model
 AUTH_USER_MODEL = "ads_app.User"
+INSTALLED_APPS += ["sslserver"]
