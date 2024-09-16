@@ -25,8 +25,7 @@ ALLOWED_HOSTS = ['webadscenter.onrender.com', '127.0.0.1', 'localhost']
 
 CSRF_TRUSTED_ORIGINS = [
     'https://webadscenter.onrender.com',
-    'http://webadscenter.onrender.com',
-    'https://127.0.0.1:8000/'
+    'https://*.127.0.0.1'
 ]
 
 

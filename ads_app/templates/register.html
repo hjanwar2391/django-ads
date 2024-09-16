@@ -3,13 +3,17 @@
 
 {% block content %}
 
-<h2 style="text-align: center;">Register</h2>
-<div style="width: 40%; margin: auto;"> 
-    <form method="POST">
-        {% csrf_token %}
-        {{ form|crispy}}
-        <button type="submit" class="btn btn-primary" style="width: 100%;">Register</button>
-    </form>
+<h2 class="text-center" style="margin-top: 20px; margin-bottom: 30px;">Register</h2>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <form method="POST" style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-primary btn-block mt-3" style="padding: 12px; font-size: 16px;">Register</button>
+            </form>
+        </div>
+    </div>
 </div>
 
 {% endblock content %}
