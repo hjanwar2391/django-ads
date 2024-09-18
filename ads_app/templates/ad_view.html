@@ -7,10 +7,13 @@
     <h1 style="text-align: center; font-size: 24px; margin-bottom: 20px;">Ad: {{ ad.title }}</h1>
 
     <!-- Responsive Video -->
-    <video controls style="width: 100%; max-width: 100%; height: auto; margin-bottom: 20px;" autoplay>
+    <video controls style="width: 100%; max-width: 100%; height: auto; margin-bottom: 20px;" autoplay muted>
         <source src="{{ ad.video.url }}" type="video/mp4">
         Your browser does not support the video tag.
     </video>
+
+    <p>{{ ad.video.url }}</p>
+
 
     <!-- Button to load the next ad manually -->
     <form method="get" action="{% url 'view_ads' %}" style="text-align: center;">

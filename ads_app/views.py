@@ -7,14 +7,19 @@ from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.decorators import login_required
 from .models import Withdrawal
 from .forms import WithdrawalForm
+from .models import Notification
 
 # Dynamically get the custom user model
 
 
+
+# this is home page area
 def homepage(request):
     return render(request, "home.html")
 
 
+
+# registation area here
 def register(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
@@ -30,6 +35,9 @@ def register(request):
 
 User = get_user_model()  # Fetch the custom user model
 
+
+
+# login area herea
 def login_view(request):
     error_message = None  # To store any error message
     if request.method == "POST":
@@ -65,26 +73,40 @@ def login_view(request):
 
 
 
+
+# logout area here
 def logout(request):
     auth_logout(request)
     return redirect("login_view")
 
 
+
+
+# status_pending area for user
 @login_required
 def status_pending(request):
     return render(request, "status_pending.html")
 
 
+
+
+# status chenging area for user
 @login_required
 def status_checking(request):
     return render(request, "status_checking.html")
 
+
+
+
+# notification area for user
 @login_required
 def notification(request):
     notifications = Notification.objects.all()
     return render(request, 'notification.html', {"notifications": notifications})
 
 
+
+#  dashboard area for user
 @login_required
 def dashboard(request):
     wallet = request.user.wallet
@@ -100,6 +122,9 @@ def dashboard(request):
     return render(request, "dashboard.html", context)
 
 
+
+
+# ads view area for user
 @login_required
 def view_ads(request):
     # Check if any ads are available
@@ -123,6 +148,7 @@ def view_ads(request):
         user=request.user, viewed_at__date=now().date()
     ).values_list("ad_id", flat=True)
     next_ad = Ad.objects.exclude(id__in=ads_viewed_today).first()
+    
 
     if next_ad:
         # Log the user viewing this ad
@@ -142,12 +168,17 @@ def view_ads(request):
     return render(request, "limit_reached.html")
 
 
+
+
+# ads countity area for user
 @login_required
 def available_ads(request):
     videos = Ad.objects.all()  # Get all videos uploaded by admin
     return render(request, "available_ads.html", {"videos": videos})
 
 
+
+# add reference are for user
 @login_required
 def add_reference(request):
     # Fetch the user's references
@@ -210,6 +241,9 @@ def add_reference(request):
     )
 
 
+
+
+# withdrawal area for user
 @login_required
 def withdrawal(request):
     wallet = (
@@ -248,15 +282,15 @@ def withdrawal(request):
     return render(request, "withdrawal.html", context)
 
 
-# admin area
-
-
+ 
+ 
 # Check if the user is an admin
 def is_superuser(user):
     return user.is_superuser
 
 
-# Ensure only superusers can access this view
+
+# user list for admin
 @user_passes_test(is_superuser)
 def admin_user_list(request):
     users = User.objects.all()
@@ -278,6 +312,9 @@ def admin_user_list(request):
     return render(request, "admin/admin_user_list.html", {"users": users})
 
 
+
+
+#  video uploading for admin
 @user_passes_test(is_superuser)
 def admin_video_upload(request):
     if request.method == "POST":
@@ -295,6 +332,9 @@ def admin_video_upload(request):
     return render(request, "admin/admin_video_upload.html", {"form": form})
 
 
+
+
+# total video list check for admin
 @user_passes_test(is_superuser)
 def admin_video_list(request):
     videos = Ad.objects.all()
@@ -307,9 +347,9 @@ def admin_video_list(request):
     return render(request, "admin/admin_video_list.html", {"videos": videos})
 
 
-from .models import Notification
 
 
+# send notification area for admin
 @user_passes_test(is_superuser)
 def admin_send_notification(request):
     if request.method == "POST":
@@ -320,6 +360,10 @@ def admin_send_notification(request):
     return render(request, "admin/admin_send_notification.html")
 
 
+
+
+
+# notificantio list for admin 
 @user_passes_test(is_superuser)
 def admin_send_notification_list(request):
     notifications = Notification.objects.all()
@@ -336,7 +380,10 @@ def admin_send_notification_list(request):
     )
 
 
-# Check if user is a superuser
+
+
+
+# withdrawal list for admin
 @user_passes_test(is_superuser)
 def admin_withdrawal_view(request):
     # Get the status filter from the request (pending, processing, completed, canceled)
@@ -365,39 +412,3 @@ def admin_withdrawal_view(request):
     return render(request, "admin/admin_withdrawal.html", context)
 
 
-# # Check if user is a superuser
-# def is_superuser(user):
-#     return user.is_superuser
-
-# @user_passes_test(is_superuser)
-# def admin_withdrawal_view(request):
-#     # Get the filter option from the request (day, week, month)
-#     date_filter = request.GET.get('date_filter')
-
-#     # Base queryset for withdrawals
-#     withdrawals = Withdrawal.objects.all()
-
-#     # Apply date filters
-#     if date_filter == 'today':
-#         withdrawals = withdrawals.filter(created_at__date=now().date())
-#     elif date_filter == 'this_week':
-#         start_of_week = now() - timedelta(days=now().weekday())
-#         withdrawals = withdrawals.filter(created_at__gte=start_of_week)
-#     elif date_filter == 'this_month':
-#         start_of_month = now().replace(day=1)
-#         withdrawals = withdrawals.filter(created_at__gte=start_of_month)
-
-#     # Handle status update via POST
-#     if request.method == 'POST':
-#         withdrawal_id = request.POST.get('withdrawal_id')
-#         new_status = request.POST.get('new_status')
-#         withdrawal = Withdrawal.objects.get(id=withdrawal_id)
-#         withdrawal.status = new_status
-#         withdrawal.save()
-#         return redirect('admin_withdrawal_view')
-
-#     context = {
-#         'withdrawals': withdrawals,
-#         'date_filter': date_filter,
-#     }
-#     return render(request, 'admin/admin_withdrawal.html', context)

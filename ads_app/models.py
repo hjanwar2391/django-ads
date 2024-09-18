@@ -8,6 +8,8 @@ from django.contrib.auth.models import User
 from django.utils import timezone
   
 
+
+# user create
 class User(AbstractUser):
     STATUS_CHOICES = [
         ('pending', 'Pending'),
@@ -41,7 +43,7 @@ class User(AbstractUser):
 
 
 
-
+# user waller
 class Wallet(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     points = models.IntegerField(default=15)  # Default value of 15 points
@@ -54,7 +56,9 @@ class Wallet(models.Model):
         return self.points >= 450 and self.user.reference_set.count() >= 3
 
 
-# admin area
+
+
+# admin upload video
 class Ad(models.Model):
     title = models.CharField(max_length=100)
     video = models.FileField(upload_to="videos/")
@@ -64,12 +68,16 @@ class Ad(models.Model):
         return self.title
 
 
+
+# user can view ad
 class UserAdView(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     ad = models.ForeignKey(Ad, on_delete=models.CASCADE)
     viewed_at = models.DateTimeField(auto_now_add=True)
 
 
+
+# admin can reference user
 class Reference(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="reference_set"

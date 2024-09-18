@@ -1,6 +1,3 @@
-
-
-
 import os
 from pathlib import Path
 from dotenv import load_dotenv
@@ -11,34 +8,26 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get(
-    "SECRET_KEY", "default-secret-key-for-dev"
-)  # Provide a default secret key for dev
 
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.environ.get("SECRET_KEY")
+
+# Toggle between development and production
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 
 
 
 # CSRF Trusted Origins
-ALLOWED_HOSTS = ['webadscenter.onrender.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ["*"]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://webadscenter.onrender.com',
-    'https://*.127.0.0.1'
+    'http://127.0.0.1'  # Change https to http for local dev server
 ]
 
 
-
-
-
-# Static files
-STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-
-# Media files
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Application definition
 INSTALLED_APPS = [
@@ -51,7 +40,6 @@ INSTALLED_APPS = [
     "ads_app",  # Your custom app
     "crispy_forms",
     "crispy_bootstrap5",
-    "sslserver",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -112,13 +100,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Email settings
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = os.environ.get("EMAIL_HOST", "smtp.gmail.com")
-EMAIL_PORT = os.environ.get("EMAIL_PORT", 587)
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 
 # Internationalization
 LANGUAGE_CODE = "en-us"
@@ -126,9 +107,10 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-STATIC_URL = "static/"
 
+# Media files
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 
 # Custom user model
